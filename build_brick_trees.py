@@ -18,42 +18,40 @@ RENDER_PREVIEW = "--preview" in sys.argv
 TEX = 1024
 
 WOOD, LEAF = 0, 1
-WOOD_COL = (0.50, 0.31, 0.19)
-LEAF_COL = (0.46, 0.82, 0.30)
+WOOD_COL = (0.47, 0.27, 0.15)
+LEAF_COL = (0.44, 0.76, 0.27)
 
 def W(x0, x1, y0, y1, z0, z1): return (WOOD, x0, x1, y0, y1, z0, z1)
 def G(x0, x1, y0, y1, z0, z1): return (LEAF, x0, x1, y0, y1, z0, z1)
 
 TREES = {
-    # big tree from the reference: tall square trunk, two tiers of branch slabs carrying leaf blocks, stepped crown
+    # big tree from the reference: thick square trunk, chunky brown branch blocks carrying leaf cubes,
+    # and a stepped crown of leaf cubes with a gap showing the trunk top
     "BrickOak": [
-        W(-3, 3, -3, 3, 0, 26), W(-4, 4, -4, 4, 0, 2),
-        # tier 1: four arms + leaf pads
-        W(3, 12, -2, 2, 12, 14), W(-12, -3, -1, 3, 12, 14), W(-2, 2, 3, 11, 12, 14), W(-3, 1, -12, -3, 12, 14),
-        G(7, 16, -5, 4, 14, 17), G(-16, -8, -3, 6, 14, 17), G(-4, 5, 8, 15, 14, 17), G(-6, 3, -16, -8, 14, 17),
-        G(9, 14, -3, 2, 17, 18), G(-14, -10, -1, 4, 17, 18),
-        # tier 2: rotated arms + quadrant leaf pads
-        W(3, 10, 0, 3, 19, 21), W(-10, -3, -3, 0, 19, 21), W(-3, 0, 3, 10, 19, 21), W(0, 3, -10, -3, 19, 21),
-        G(4, 13, 1, 10, 21, 24), G(-13, -4, -10, -1, 21, 24), G(-10, -1, 4, 13, 21, 24), G(1, 10, -13, -4, 21, 24),
+        W(-3, 3, -3, 3, 0, 31),
+        # tier 1: four branch blocks, a leaf cube on each tip
+        W(3, 11, -2, 2, 12, 15), W(-11, -3, -1, 3, 13, 16), W(-2, 2, 3, 10, 11, 14), W(-1, 3, -10, -3, 12, 15),
+        G(7, 14, -4, 3, 15, 20), G(-14, -7, -2, 5, 16, 21), G(-4, 3, 7, 14, 14, 19), G(-3, 4, -14, -7, 15, 20),
+        # tier 2: diagonal-ish branches + leaf cubes
+        W(3, 9, 2, 5, 20, 23), W(-9, -3, -5, -2, 21, 24), W(-5, -2, 3, 9, 20, 23), W(2, 5, -9, -3, 21, 24),
+        G(6, 13, 2, 9, 23, 28), G(-13, -6, -9, -2, 24, 29), G(-9, -2, 6, 13, 23, 28), G(2, 9, -13, -6, 24, 29),
         # crown
-        W(-8, 8, -2, 2, 25, 27), W(-2, 2, -8, 8, 25, 27),
-        G(-11, 2, -9, 1, 27, 30), G(-2, 11, -1, 10, 27, 30), G(1, 10, -10, 0, 28, 31), G(-9, 0, 0, 10, 28, 31),
-        G(-6, 6, -6, 6, 31, 34), G(-4, 2, -3, 4, 34, 37), G(0, 5, -5, 0, 34, 36),
+        G(-9, 0, -8, 1, 29, 34), G(0, 9, -1, 8, 29, 34), G(-1, 8, -9, -2, 30, 35), G(-8, 0, 2, 9, 30, 35),
+        G(-6, 4, -5, 5, 34, 39), G(-2, 6, -6, 2, 35, 39), G(-3, 3, -3, 3, 39, 43),
     ],
-    # the small stacked tree on the left of the reference
+    # the small stacked tree on the left of the reference: brown block under stacked leaf cubes
     "BrickPine": [
-        W(-2, 2, -2, 2, 0, 7), W(-4, 4, -3, 3, 4, 7),
-        G(-7, 7, -6, 6, 7, 10), G(5, 9, -2, 3, 8, 11), G(-9, -5, -3, 2, 8, 11),
-        G(-5, 6, -5, 5, 10, 13), G(-6, -3, 1, 6, 11, 14),
-        G(-4, 4, -4, 4, 13, 16), G(-3, 3, -2, 3, 16, 19), G(-2, 2, -2, 2, 19, 21),
+        W(-2, 2, -2, 2, 0, 8), W(-4, 4, -4, 4, 6, 10),
+        G(-6, 6, -6, 6, 10, 15), G(4, 9, -3, 3, 11, 15),
+        G(-5, 4, -4, 5, 15, 19), G(-3, 3, -3, 3, 19, 23), G(-2, 2, -1, 3, 23, 26),
     ],
-    # a smaller round-ish oak
+    # a smaller oak in the same style
     "BrickOakSmall": [
-        W(-2, 2, -2, 2, 0, 11), W(-3, 3, -3, 3, 0, 1),
-        W(-7, 7, -1, 1, 8, 10), W(-1, 1, -7, 7, 8, 10),
-        G(-9, 9, -8, 8, 10, 13), G(6, 11, -3, 4, 9, 12), G(-11, -6, -4, 3, 9, 12), G(-3, 4, -11, -6, 9, 12),
-        G(-6, 6, -6, 7, 13, 16), G(-7, -3, -2, 4, 14, 16),
-        G(-3, 4, -4, 3, 16, 18), G(-1, 2, -1, 2, 18, 19),
+        W(-2, 2, -2, 2, 0, 15),
+        W(2, 8, -1, 2, 9, 12), W(-8, -2, -2, 1, 10, 13),
+        G(5, 11, -3, 4, 12, 17), G(-11, -5, -4, 3, 13, 18),
+        G(-6, 6, -6, 6, 15, 20), G(-4, 1, 3, 9, 16, 20),
+        G(-4, 5, -5, 4, 20, 24), G(-2, 3, -2, 3, 24, 27),
     ],
 }
 
@@ -94,37 +92,38 @@ def build(name, boxes):
 
 # ======================================================================== stud painting
 def paint(boxes, P, N, ID, seed):
+    """Classic Roblox surfaces: raised square 'Studs' on leaves, recessed 'Inlet' squares on wood.
+    One stud per 1x1 grid cell, bevel lit from the top-left of each face; no outlines - block edges
+    read only through the per-face shading, like the reference."""
     rng = random.Random(seed)
-    tone = np.array([rng.uniform(0.93, 1.07) for _ in boxes] + [1.0], np.float32)
+    tone = np.array([rng.uniform(0.97, 1.03) for _ in boxes] + [1.0], np.float32)
     kind = np.array([b[0] for b in boxes] + [0])
-    B = np.array([b[1:] for b in boxes] + [(0,) * 6], np.float32)
     ID = np.clip(ID, 0, len(boxes))
     x, y, z = P[..., 0], P[..., 1], P[..., 2]
     nx, ny, nz = N[..., 0], N[..., 1], N[..., 2]
-    ax = np.argmax(np.abs(N), axis=-1)                  # dominant axis of each texel's face
-    u = np.where(ax == 0, y, x)
+    ax = np.argmax(np.abs(N), axis=-1)
+    # in-plane coords: u to the viewer's right, v up (for top/bottom faces v = +y)
+    u = np.where(ax == 0, -np.sign(nx) * y, np.where(ax == 1, np.sign(ny) * x, x))
     v = np.where(ax == 2, y, z)
-    # base colour per block
-    base = np.where((kind[ID] == LEAF)[..., None], np.array(LEAF_COL), np.array(WOOD_COL)) * tone[ID][..., None]
-    # lighting: bright tops, mid sides, dark bottoms
-    L = np.array((-0.45, -0.55, 0.70)); L /= np.linalg.norm(L)
-    ndl = np.clip(nx * L[0] + ny * L[1] + nz * L[2], 0, 1)
-    shade = 0.70 + 0.40 * ndl + 0.10 * nz
-    # studs: one per 1x1 cell, rim lit from the upper-left of the face
+    leaf = kind[ID] == LEAF
+    base = np.where(leaf[..., None], np.array(LEAF_COL), np.array(WOOD_COL)) * tone[ID][..., None]
+    # flat per-face lighting (top bright, sides by direction, bottom dark)
+    Lh = np.array((-0.6, -0.8)); side = np.clip(nx * Lh[0] + ny * Lh[1], 0, 1)
+    shade = np.where(nz > 0.5, 1.10, np.where(nz < -0.5, 0.70, 0.80 + 0.16 * side))
+    # rounded-square stud in every cell
     fu = u - np.floor(u) - 0.5; fv = v - np.floor(v) - 0.5
-    r = np.hypot(fu, fv) + 1e-6
-    lu, lv = -0.7071, 0.7071
-    side = (fu * lu + fv * lv) / r                      # +1 on the lit side of the stud, -1 opposite
-    rim = (r > 0.23) & (r < 0.34)
-    stud = shade * np.where(rim, 1.0 + 0.38 * side, np.where(r <= 0.23, 1.07, 1.0))
-    stud *= np.where((r >= 0.34) & (r < 0.40), 1.0 - 0.22 * np.clip(-side, 0, 1), 1.0)   # tiny drop shadow
-    # dark outline along every block edge
-    x0, x1, y0, y1, z0, z1 = (B[ID][..., k] for k in range(6))
-    du = np.where(ax == 0, np.minimum(y - y0, y1 - y), np.minimum(x - x0, x1 - x))
-    dv = np.where(ax == 2, np.minimum(y - y0, y1 - y), np.minimum(z - z0, z1 - z))
-    edge = np.minimum(du, dv)
-    stud *= np.where(edge < 0.07, 0.72, np.where(edge < 0.14, 0.9, 1.0))
-    return np.clip(base * stud[..., None], 0, 1)
+    h, r, bev = 0.25, 0.07, 0.065
+    qx = np.abs(fu) - (h - r); qy = np.abs(fv) - (h - r)
+    d = np.hypot(np.maximum(qx, 0), np.maximum(qy, 0)) + np.minimum(np.maximum(qx, qy), 0) - r
+    vert = np.abs(fv) > np.abs(fu)                      # nearest edge is top/bottom
+    lit_edge = np.where(vert, fv > 0, fu < 0)           # top or left edge
+    band = (d < 0) & (d > -bev)
+    f = np.ones_like(d)
+    raised = np.where(band, np.where(lit_edge, 1.24, 0.74), 1.0)
+    raised = np.where((d >= 0) & (d < 0.05) & ~lit_edge, 0.9, raised)          # small cast shadow
+    inlet = np.where(band, np.where(lit_edge, 0.72, 1.14), np.where(d < 0, 0.9, 1.0))
+    f = np.where(leaf, raised, inlet)
+    return np.clip(base * (shade * f)[..., None], 0, 1)
 
 # ======================================================================== bake + export
 def bake_pass(mat, img, build_input):
